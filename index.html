@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina principal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Generador de Números Aleatorios</h1>
+    </header>
+    <div class="contenedor">
+
+    
+        <div class="generadores">
+            <div class="item">
+                <button id="generarNumero" >Generar Número Aleatorio</button>
+                <p >Número Aleatorio: <span id="numeroGenerado"></span></p>
+            </div>
+            <div class="item">
+                <button id="generarNumero2" >Generar Número Aleatorio</button>
+                <p >Número Aleatorio: <span id="numeroGenerado2"></span></p>
+            </div>
+        
+        </div>
+        <div class="resultado">
+            <button id="generarSuma">Generar suma</button>
+            <p>Suma de Números: <span id="sumaGenerada"></span></p>
+        </div>
+
+        <div class="cartas">
+            <div id="carta1"></div>
+            <div id="carta2"></div>
+            <div id="carta3"></div>
+        </div>
+
+   
+    </div>
+    <script>
+        // Función para generar un número aleatorio
+        let numeroAleatorio = 0;
+        let numeroAleatorio2 = 0;
+        const valoresFibonacci = [2, 3, 5, 8, 13, 21];
+        function borrarimagenes(){
+            document.getElementById("carta1").style.backgroundImage = "none";
+            document.getElementById("carta2").style.backgroundImage = "none";
+            document.getElementById("carta3").style.backgroundImage = "none";
+            document.getElementById("sumaGenerada").textContent = "";
+        }
+
+        function generarNumeroAleatorio() {
+            borrarimagenes()
+            numeroAleatorio = Math.floor(Math.random() * 13) + 1; // Rango de 1 a 13
+            document.getElementById("numeroGenerado").textContent = obtenerCarta(numeroAleatorio);
+        }
+
+        function generarNumeroAleatorio2() {
+            borrarimagenes()
+            numeroAleatorio2 = Math.floor(Math.random() * 13) + 1; // Rango de 1 a 13
+            document.getElementById("numeroGenerado2").textContent = obtenerCarta(numeroAleatorio2);
+        }
+
+        function generarSuma() {
+           
+            const valorCarta1 = convertirACarta(numeroAleatorio);
+            const valorCarta2 = convertirACarta(numeroAleatorio2);
+
+            const sumaNum = valorCarta1 + valorCarta2;
+            document.getElementById("sumaGenerada").textContent = sumaNum;
+            if (valoresFibonacci.includes(sumaNum)) {
+                document.getElementById("carta1").style.backgroundImage = `url('assets/${numeroAleatorio}.png')`;
+                document.getElementById("carta2").style.backgroundImage = `url('assets/${numeroAleatorio2}.png')`;
+                if (sumaNum > 10){
+                    document.getElementById("carta3").style.backgroundImage = `url('assets/joker.png')`
+                } else {
+                    document.getElementById("carta3").style.backgroundImage = `url('assets/${sumaNum}.png')`;
+                }
+            } else {
+                alert("La suma no es un valor de Fibonacci");
+            }
+
+
+        }
+
+        function obtenerCarta(valor) {
+            if (valor === 11) {
+                return "J";
+            }
+            if (valor === 12) {
+                return "Q";
+            }
+            if (valor === 13) {
+                return "K";
+            }
+            if (valor === 1) {
+                return "A";
+            }
+            return valor.toString();
+        }
+
+        function convertirACarta(valor) {
+            if (valor === 11) {
+                return 10;
+            }
+            if (valor === 12) {
+                return 10;
+            }
+            if (valor === 13) {
+                return 10;
+            }
+           
+            return parseInt(valor, 10);
+        }
+
+        // Asociar las funciones a los eventos "click" de los botones
+        document.getElementById("generarNumero").addEventListener("click", generarNumeroAleatorio);
+        document.getElementById("generarNumero2").addEventListener("click", generarNumeroAleatorio2);
+        document.getElementById("generarSuma").addEventListener("click", generarSuma);
+    </script>
+</body>
+</html>
